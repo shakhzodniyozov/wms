@@ -1,7 +1,8 @@
 ﻿namespace WMS.Domain;
 
-public class Product
+public class Product : IEntity
 {
+    public Guid Id { get; set; }
     public string Name { get; set; } = null!;
     public string? Code { get; set; }
     public decimal LastPrice => Prices.Count == 0 ? 0 : Prices.OrderByDescending(x => x.DateTime).First().Value;

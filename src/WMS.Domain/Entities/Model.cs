@@ -1,7 +1,8 @@
 ﻿namespace WMS.Domain;
 
-public class Model
+public class Model : IEntity
 {
+    public Guid Id { get; set; }
     public string? ModelName { get; set; }
     public int YearOfIssue { get; set; }
     public BodyTypes BodyType { get; set; }
