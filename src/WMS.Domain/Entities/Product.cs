@@ -11,8 +11,9 @@ public class Product : IEntity
     public string EAN { get; set; } = null!;
     public string? Description { get; set; }
     public Category Category { get; set; } = null!;
-    public int CategoryId { get; set; }
+    public Guid CategoryId { get; set; }
     public List<Price> Prices { get; set; } = new();
     public List<Model> Models { get; set; } = new();
     public List<ProductAddress> Addresses { get; set; } = new();
+    public List<SupplyOfGoodsDetails> SupplyOfGoodsDetails { get; set; } = new();
 }

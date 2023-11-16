@@ -1,5 +1,4 @@
-﻿
-namespace WMS.Domain;
+﻿namespace WMS.Domain;
 
 public class SupplyOfGoods : IEntity
 {

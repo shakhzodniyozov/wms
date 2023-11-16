@@ -3,10 +3,10 @@
 public class Model : IEntity
 {
     public Guid Id { get; set; }
-    public string? ModelName { get; set; }
+    public string ModelName { get; set; } = null!;
     public int YearOfIssue { get; set; }
     public BodyTypes BodyType { get; set; }
-    public Manufacturer Manufactorer { get; set; } = null!;
-    public int ManufactorId { get; set; }
+    public Manufacturer Manufacturer { get; set; } = null!;
+    public Guid ManufacturerId { get; set; }
     public List<Product> Products { get; set; } = new();
 }
