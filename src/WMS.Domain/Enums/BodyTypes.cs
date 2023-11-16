@@ -2,10 +2,11 @@
 
 public enum BodyTypes
 {
-    Седан,
-    Хэтчбек,
-    Купе,
-    Универсал,
-    Минивен,
-    Внедорожник
+    Sedan,
+    Hatchback,
+    Liftback,
+    Coupe,
+    Universal,
+    Minivan,
+    SUV
 }
