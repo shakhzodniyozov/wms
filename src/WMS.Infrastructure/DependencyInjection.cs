@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WMS.Application;
 
 namespace WMS.Infrastructure;
 
@@ -8,11 +9,14 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
-        services.AddDbContext<ApplicationDbContext>(opt =>
+        services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(opt =>
         {
             opt.UseNpgsql(config.GetConnectionString("psql"))
                 .UseCamelCaseNamingConvention();
         });
+
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

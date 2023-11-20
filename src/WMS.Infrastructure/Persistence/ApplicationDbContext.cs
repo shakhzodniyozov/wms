@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WMS.Application;
 
 namespace WMS.Infrastructure;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
-        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 
