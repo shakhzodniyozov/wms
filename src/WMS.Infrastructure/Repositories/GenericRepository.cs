@@ -68,7 +68,7 @@ public class GenericRepository<T> : IRepository<T> where T : class, IEntity
         return await FirstOrDefaultAsync(x => x.Id == id, includeProperties, disableTracking);
     }
 
-    public virtual T UpdateAsync(T entity)
+    public virtual T Update(T entity)
     {
         dbSet.Update(entity);
         return entity;

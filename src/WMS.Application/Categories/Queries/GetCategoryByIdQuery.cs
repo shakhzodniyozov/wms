@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using WMS.Domain;
 
 namespace WMS.Application;
@@ -12,12 +13,14 @@ public class GetCategoryByIdQuery : IRequest<CategoryDto>
 
 public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, CategoryDto>
 {
-    public GetCategoryByIdQueryHandler(IUnitOfWork uow)
+    public GetCategoryByIdQueryHandler(IMapper mapper, IUnitOfWork uow)
     {
+        this.mapper = mapper;
         this.uow = uow;
         categoryRepo = uow.CategoryRepository;
     }
 
+    private readonly IMapper mapper;
     private readonly IUnitOfWork uow;
     private readonly ICategoryRepository categoryRepo;
 
@@ -28,6 +31,6 @@ public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery,
         if (category == null)
             throw new Exception("Category with provided id was not found");
 
-        return new CategoryDto(category.Id, category.Name);
+        return mapper.Map<CategoryDto>(category);
     }
 }
