@@ -13,8 +13,8 @@ public class GenericRepository<T> : IRepository<T> where T : class, IEntity
         dbSet = dbContext.Set<T>();
     }
 
-    private readonly IApplicationDbContext context;
-    private readonly DbSet<T> dbSet;
+    protected readonly IApplicationDbContext context;
+    protected readonly DbSet<T> dbSet;
 
     public async Task<T> CreateAsync(T entity)
     {

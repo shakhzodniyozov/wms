@@ -15,6 +15,6 @@ public class Product : IEntity
     public Image? Image { get; set; }
     public List<Price> Prices { get; set; } = new();
     public List<Model> Models { get; set; } = new();
-    public List<ProductAddress> Addresses { get; set; } = new();
+    public List<ProductAddress> ProductAddresses { get; set; } = new();
     public List<SupplyOfGoodsDetails> SupplyOfGoodsDetails { get; set; } = new();
 }

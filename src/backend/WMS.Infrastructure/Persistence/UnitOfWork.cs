@@ -15,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
     private IManufacturerRepository? manufacturerRepository;
     private IModelRepository? modelRepository;
     private IProductRepository? productRepository;
+    private IAddressRepository? addressRepository;
 
     public IModelRepository ModelRepository
     {
@@ -49,6 +50,15 @@ public class UnitOfWork : IUnitOfWork
         {
             productRepository ??= new ProductRepository(dbContext);
             return productRepository;
+        }
+    }
+
+    public IAddressRepository AddressRepository
+    {
+        get
+        {
+            addressRepository ??= new AddressRepository(dbContext);
+            return addressRepository;
         }
     }
 

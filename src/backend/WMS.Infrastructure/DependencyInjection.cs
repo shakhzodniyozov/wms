@@ -15,7 +15,6 @@ public static class DependencyInjection
                 .UseCamelCaseNamingConvention();
         });
 
-        services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IImageService, ImageService>();
 

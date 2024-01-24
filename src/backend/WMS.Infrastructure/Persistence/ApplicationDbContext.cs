@@ -23,5 +23,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         modelBuilder.ApplyConfiguration(new SupplyOfGoodsConfig());
         modelBuilder.ApplyConfiguration(new SupplyOfGoodsConfig());
         modelBuilder.ApplyConfiguration(new ImageConfig());
+        modelBuilder.ApplyConfiguration(new AddressConfig());
     }
 }

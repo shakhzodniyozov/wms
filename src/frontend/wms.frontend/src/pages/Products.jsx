@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Table } from "react-bootstrap"
+import { Button, Table } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom";
 import productService from "../services/product.service";
 
@@ -16,8 +16,12 @@ export function Products() {
 
     return (
         <>
-            <Link to="/products/new">New product</Link>
-            <Table>
+            <Link to="/products/new">
+                <Button>
+                    New product
+                </Button>
+            </Link>
+            <Table striped hover>
                 <thead>
                     <tr>
                         <th>#</th>

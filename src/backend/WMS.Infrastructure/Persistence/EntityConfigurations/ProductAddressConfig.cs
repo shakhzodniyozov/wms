@@ -12,7 +12,12 @@ public class ProductAddressConfig : IEntityTypeConfiguration<ProductAddress>
 
         builder.HasKey(x => x.Id);
 
-        builder.HasMany(x => x.Products)
-                .WithMany(x => x.Addresses);
+        builder.HasOne(x => x.Product)
+                .WithMany(x => x.ProductAddresses)
+                .HasForeignKey(x => x.ProductId);
+
+        builder.HasOne(x => x.Address)
+                .WithMany(x => x.ProductAddresses)
+                .HasForeignKey(x => x.AddressId);
     }
 }
