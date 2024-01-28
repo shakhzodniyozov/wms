@@ -73,4 +73,10 @@ public class GenericRepository<T> : IRepository<T> where T : class, IEntity
         dbSet.Update(entity);
         return entity;
     }
+
+    public virtual T[] UpdateRange(params T[] entities)
+    {
+        dbSet.UpdateRange(entities);
+        return entities;
+    }
 }

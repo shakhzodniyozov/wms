@@ -49,6 +49,18 @@ export function ProductDetails() {
                 }
 
                 setLoading(false);
+
+                setTimeout(() => {
+                    bwipjs.toCanvas("barcode", {
+                        bcid: "ean13",
+                        text: result.data.ean,
+                        scale: 3,
+                        height: 10,
+                        includetext: true,
+                        textxalign: "center",
+                        width: 30
+                    });
+                }, 100)
             }
         });
 
@@ -189,7 +201,7 @@ export function ProductDetails() {
                                     onClick={() => document.getElementById("productImage").click()}
                                     className="mt-2"
                                 >
-                                    Выбрать фото
+                                    Select photo
                                 </Button>
                             </div>
                         </div>
@@ -197,7 +209,7 @@ export function ProductDetails() {
                     <div className="col-sm-12 col-md-8 col-lg-9">
                         <div className="row align-items-end">
                             <div className="col-md-12 col-lg-4">
-                                <label htmlFor="productName">Название</label>
+                                <label htmlFor="productName">Name</label>
                                 <input
                                     className="form-control"
                                     id="productName"
@@ -206,7 +218,7 @@ export function ProductDetails() {
                                 />
                             </div>
                             <div className="col-md-12 col-lg-4 mt-2">
-                                <label htmlFor="productName">Цена</label>
+                                <label htmlFor="productName">Price</label>
                                 <input
                                     className="form-control"
                                     id="productPrice"
@@ -219,6 +231,16 @@ export function ProductDetails() {
                                     options={data.categories.map(x => ({ value: x.id, label: x.name }))}
                                     defaultValue={{ value: product.categoryId, label: product.categoryName }}
                                     onChange={(newValue) => setProduct({ ...product, categoryId: newValue.value })}
+                                />
+                            </div>
+                            <div className="col-md-12 col-lg-4 mt-2">
+                                <label htmlFor="code">Code</label>
+                                <input
+                                    className="form-control"
+                                    id="code"
+                                    placeholder="Code"
+                                    defaultValue={product.code}
+                                    onChange={(e) => setProduct({ ...product, code: e.target.value })}
                                 />
                             </div>
                         </div>
@@ -242,7 +264,7 @@ export function ProductDetails() {
                                 <textarea
                                     defaultValue={product.description}
                                     onChange={(e) => setProduct({ ...product, description: e.target.value })}
-                                    placeholder="Описание товара"
+                                    placeholder="Description"
                                     className="form-control"
                                 >
                                 </textarea>

@@ -9,6 +9,9 @@ import { ProductDetails } from "./pages/ProductDetails";
 import { AddressStorage } from "./pages/AddressStorage";
 import { GenerateAddresses } from "./pages/GenerateAddresses";
 import { CellDetails } from "./pages/CellDetails";
+import { NewSupply } from "./pages/NewSupply";
+import { SuppliesOfGoods } from "./pages/SuppliesOfGoods";
+import { SupplyDetails } from "./pages/SupplyDetails";
 
 export const router = createBrowserRouter([
     {
@@ -51,6 +54,18 @@ export const router = createBrowserRouter([
                 path: "address-storage/:addressId",
                 element: <CellDetails />
             },
+            {
+                path: "supply-of-goods",
+                element: <SuppliesOfGoods />
+            },
+            {
+                path: "supply-of-goods/new",
+                element: <NewSupply />
+            },
+            {
+                path: "supply-of-goods/:id",
+                element: <SupplyDetails />
+            }
         ]
     }
 ])

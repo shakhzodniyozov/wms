@@ -15,6 +15,10 @@ class ProductService {
         return await axios.get(`${this.#baseURL}/new/preliminary`);
     }
 
+    async getSuggestions(productName) {
+        return await axios.get(`${this.#baseURL}/suggestion?productName=${productName}`);
+    }
+
     async create(product) {
         return await axios.post(`${this.#baseURL}`, product);
     }

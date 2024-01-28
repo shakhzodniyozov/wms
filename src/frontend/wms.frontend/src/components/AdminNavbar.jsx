@@ -11,6 +11,7 @@ export function AdminNavbar() {
                     <Nav.Link as={Link} to={"categories"}>Categories</Nav.Link>
                     <Nav.Link as={Link} to={"manufacturers"}>Manufacturers</Nav.Link>
                     <Nav.Link as={Link} to={"products"}>Products</Nav.Link>
+                    <Nav.Link as={Link} to={"supply-of-goods"}>Supply of Goods</Nav.Link>
                     <Nav.Link as={Link} to={"address-storage"}>Address Storage</Nav.Link>
                 </Nav>
             </Container>

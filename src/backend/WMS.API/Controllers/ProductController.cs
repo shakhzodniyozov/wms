@@ -27,6 +27,12 @@ public class ProductController : BaseController
         return Ok(await Mediator.Send(new GetPreliminaryDataForNewProduct()));
     }
 
+    [HttpGet("suggestion")]
+    public async Task<ActionResult<IEnumerable<ProductForAutocompleteDto>>> GetSuggestions([FromQuery] string productName)
+    {
+        return Ok(await Mediator.Send(new GetSuggestionQuery(productName)));
+    }
+
     #endregion
 
     #region POST

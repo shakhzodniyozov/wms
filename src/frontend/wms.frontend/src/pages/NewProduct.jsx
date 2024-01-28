@@ -157,7 +157,7 @@ export function NewProduct() {
                                 onClick={() => document.getElementById("productImage").click()}
                                 className="mt-2"
                             >
-                                Выбрать фото
+                                Select Photo
                             </Button>
                         </div>
                     </div>
@@ -169,7 +169,7 @@ export function NewProduct() {
                                 className="form-control"
                                 id="productName"
                                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                placeholder="Название"
+                                placeholder="Name"
                             />
                         </div>
                         <div className="col-md-12 col-lg-4 mt-2">
@@ -177,14 +177,21 @@ export function NewProduct() {
                                 className="form-control"
                                 id="productPrice"
                                 onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) })}
-                                placeholder="Цена"
+                                placeholder="Price"
                             />
                         </div>
                         <div className="col-md-12 col-lg-4 mt-2">
                             <Select
                                 options={data.categories.map(x => ({ value: x.id, label: x.name }))}
                                 onChange={(newValue) => setForm({ ...form, categoryId: newValue.value })}
-                                placeholder="Категория"
+                                placeholder="Category"
+                            />
+                        </div>
+                        <div className="col-md-12 col-lg-4 mt-2">
+                            <input
+                                className="form-control"
+                                placeholder="Code"
+                                onChange={(e) => setForm({ ...form, code: e.target.value })}
                             />
                         </div>
                     </div>
@@ -206,7 +213,7 @@ export function NewProduct() {
                         <div className="col">
                             <textarea
                                 onChange={(e) => setForm({ ...form, description: e.target.value })}
-                                placeholder="Описание товара"
+                                placeholder="Description"
                                 className="form-control"
                             >
                             </textarea>
@@ -284,7 +291,7 @@ export function NewProduct() {
                     size="sm"
                     role="alert"
                 />}
-                {loading ? "  Ждите..." : "Сохранить"}
+                {loading ? "  Loading..." : "Save"}
             </Button>
         </div >
 

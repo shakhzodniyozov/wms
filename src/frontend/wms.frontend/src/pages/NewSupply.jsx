@@ -1,0 +1,132 @@
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import AsyncSelect from "react-select/async";
+import { BsXLg } from "react-icons/bs";
+import supplyService from "../services/supply.service";
+import productService from "../services/product.service";
+import { useNavigate } from "react-router-dom";
+
+export function NewSupply() {
+
+    const [selectedProduct, setSelectedProduct] = useState([]);
+    const [productsInTable, setProductsInTable] = useState([]);
+    const [quantity, setQuantity] = useState("");
+    const [prodList, setProdList] = useState({ date: new Date(), products: {} });
+
+    let navigate = useNavigate();
+
+    function addProduct() {
+        if (!selectedProduct.value || quantity === 0) return;
+
+        let productsListCopy = { ...prodList.products };
+        productsListCopy[selectedProduct.value.toString()] = quantity;
+        setProdList({ ...prodList, products: productsListCopy });
+
+        let newRecord = {
+            id: selectedProduct.value,
+            name: selectedProduct.label,
+            quantity: quantity
+        };
+
+        setProductsInTable([...productsInTable, newRecord]);
+
+        setSelectedProduct(null);
+        setQuantity("");
+    }
+
+    function deleteProduct(e) {
+        const rowNumber = e.target.parentElement.parentElement.firstChild.innerText;
+        const id = productsInTable[rowNumber - 1].id;
+        delete prodList.products[id];
+        setProdList(prodList);
+        setProductsInTable(productsInTable.filter((v, i) => i !== rowNumber - 1));
+    }
+
+    function sendConsignment(e) {
+        supplyService.create(prodList).then(result => {
+            if (result.status === 200)
+                navigate("/supply-of-goods");
+        }).catch(error => console.error(error));
+    }
+
+    function loadProducts(value, callback) {
+        productService.getSuggestions(value.trim()).then(result => callback(result.data.map(item => ({ value: item.id, label: item.name }))));
+    }
+
+    return (
+        <div className="container-fluid">
+            <div className="row mt-lg-2 align-items-center">
+                <div className="col-12 col-lg-2 col-xl-2">
+                    <input
+                        type="date"
+                        onChange={(e) => setProdList({ ...prodList, date: e.target.value })}
+                    />
+                </div>
+                <div className="col-12 col-lg-6 col-xl-8 mt-2 mt-lg-0">
+                    <AsyncSelect
+                        cacheOptions
+                        placeholder="Продукты"
+                        isSearchable
+                        value={selectedProduct}
+                        onChange={(newValue) => {
+                            setSelectedProduct(newValue);
+                            document.getElementById("quantity").focus();
+                        }}
+                        loadOptions={loadProducts}
+                    />
+                </div>
+                <div className="col-12 col-lg-2 col-xl-1 mt-2 mt-lg-0">
+                    <input
+                        placeholder="Количество"
+                        id="quantity"
+                        className="form-control"
+                        value={quantity}
+                        onChange={e => setQuantity(e.target.value)}
+                        onKeyPress={e => {
+                            if (e.code === "Enter")
+                                addProduct();
+                        }}
+                    />
+                </div>
+                <div className="col-12 col-lg-2 col-xl-1 mt-2 mt-lg-0">
+                    <div className="d-grid d-lg-block">
+                        <Button onClick={e => addProduct(e.target)} variant="secondary">Добавить</Button>
+                    </div>
+                </div>
+            </div>
+            <div className="col-12 col-lg-1 mt-2">
+                <div className="d-grid d-lg-block">
+                    <Button variant="primary" onClick={sendConsignment}>Сохранить</Button>
+                </div>
+            </div>
+            <div className="table-responsive">
+                <table className="table products my-1">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Товар</th>
+                            <th>Количество</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {productsInTable.map((v, i) => {
+                            return (
+                                <tr key={i}>
+                                    <th scope="row">{i + 1}</th>
+                                    <td className="col-product-name">{v.name}</td>
+                                    <td>{v.quantity}</td>
+                                    <td>
+                                        <Button variant="danger" onClick={deleteProduct} data-id={v.id}>
+                                            <BsXLg pointerEvents={'none'} />
+                                        </Button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        </div >
+    )
+}
