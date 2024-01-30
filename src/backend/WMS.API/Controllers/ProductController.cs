@@ -33,6 +33,12 @@ public class ProductController : BaseController
         return Ok(await Mediator.Send(new GetSuggestionQuery(productName)));
     }
 
+    [HttpGet("getById")]
+    public async Task<ActionResult> GetProductByEAN([FromQuery] string ean)
+    {
+        return Ok(await Mediator.Send(new GetProductByEANQuery(ean)));
+    }
+
     #endregion
 
     #region POST

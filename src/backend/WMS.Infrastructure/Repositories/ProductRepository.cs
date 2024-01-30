@@ -12,6 +12,16 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
     }
 
+    public async Task<Product?> GetByEAN(string ean, bool disableTracking = false)
+    {
+        IQueryable<Product> query = dbSet;
+
+        if (disableTracking)
+            query = query.AsNoTracking();
+
+        return await query.FirstOrDefaultAsync(x => x.EAN == ean);
+    }
+
     public async Task<List<Product>> GetProductsIncludingModels(Expression<Func<Product, bool>> expression = null!, bool disableTracking = false)
     {
         IQueryable<Product> query = dbSet;
@@ -25,7 +35,5 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
                             .ThenInclude(x => x.Manufacturer)
                               .ThenInclude(x => x.Models)
                           .ToListAsync();
-
-        // return await dbSet.Where(x => x.Name.ToUpper().Contains("ФИ", StringComparison.OrdinalIgnoreCase)).ToListAsync();
     }
 }

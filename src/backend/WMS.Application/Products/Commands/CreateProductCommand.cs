@@ -84,12 +84,12 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         if (lastProduct != null)
         {
             lastProductNumber = lastProduct.EAN.Substring(0, lastProduct.EAN.Length - 1);
-            string nextProductNumber = (int.Parse(lastProductNumber.Substring(0, lastProductNumber.Length)) + 1).ToString();
+            string nextProductNumber = (long.Parse(lastProductNumber.Substring(0, lastProductNumber.Length)) + 1).ToString();
             string ean = new string('0', 12 - nextProductNumber.Length) + nextProductNumber;
             CalculateCheckDigit(ref ean);
             return ean;
         }
-        return "0000000000017";
+        return "1000000000016";
     }
 
     private void CalculateCheckDigit(ref string ean)
