@@ -12,6 +12,10 @@ import { CellDetails } from "./pages/CellDetails";
 import { NewSupply } from "./pages/NewSupply";
 import { SuppliesOfGoods } from "./pages/SuppliesOfGoods";
 import { SupplyDetails } from "./pages/SupplyDetails";
+import { Entities } from "./pages/Entities";
+import { Engines } from "./pages/Engines";
+import { NewEngine } from "./pages/NewEngine";
+import { Engine } from "./pages/Engine";
 
 export const router = createBrowserRouter([
     {
@@ -23,11 +27,15 @@ export const router = createBrowserRouter([
                 element: <Main />
             },
             {
-                path: "categories",
+                path: "entities",
+                element: <Entities />
+            },
+            {
+                path: "entities/categories",
                 element: <Categories />
             },
             {
-                path: "manufacturers",
+                path: "entities/manufacturers",
                 element: <Manufacturers />
             },
             {
@@ -55,16 +63,28 @@ export const router = createBrowserRouter([
                 element: <CellDetails />
             },
             {
-                path: "supply-of-goods",
+                path: "entities/supply-of-goods",
                 element: <SuppliesOfGoods />
             },
             {
-                path: "supply-of-goods/new",
+                path: "entities/supply-of-goods/new",
                 element: <NewSupply />
             },
             {
-                path: "supply-of-goods/:id",
+                path: "entities/supply-of-goods/:id",
                 element: <SupplyDetails />
+            },
+            {
+                path: "entities/engine",
+                element: <Engines />
+            },
+            {
+                path: "entities/engine/new",
+                element: <NewEngine />
+            },
+            {
+                path: "entities/engine/:id",
+                element: <Engine />
             }
         ]
     }

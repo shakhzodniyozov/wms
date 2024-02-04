@@ -9,7 +9,8 @@ public class ProductProfile : Profile
     {
         CreateMap<CreateProductCommand, Product>()
             .ForMember(x => x.Image, opt => opt.Ignore())
-            .ForMember(x => x.Models, opt => opt.Ignore());
+            .ForMember(x => x.Models, opt => opt.Ignore())
+            .ForMember(x => x.Engines, opt => opt.Ignore());
 
         CreateMap<Product, ProductDetailsDto>()
             .ForMember(x => x.Image, opt => opt.MapFrom(x => x.Image.Name))

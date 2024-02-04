@@ -14,4 +14,5 @@ public class ProductDetailsDto
     public string? Image { get; set; }
     public bool ForAllManufacturers { get; set; }
     public ModelWithYearsOfIssueDto[] Models { get; set; } = null!;
+    public EngineDto[]? Engines { get; set; }
 }

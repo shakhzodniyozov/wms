@@ -24,7 +24,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
 
     public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        var product = await productRepository.GetByIdAsync(request.Id, "Image,Models");
+        var product = await productRepository.GetByIdAsync(request.Id, "Image,Models,Engines");
 
         if (product == null)
             throw new Exception("Product with provided Id was not found.");
@@ -62,6 +62,10 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
                 product.Models.AddRange(models);
             }
         }
+
+        var engines = await uow.EngineRepository.GetAllAsync(x => request.Engines.Contains(x.Id));
+        product.Engines.Clear();
+        product.Engines.AddRange(engines);
 
         productRepository.Update(product);
         await uow.SaveChangesAsync();

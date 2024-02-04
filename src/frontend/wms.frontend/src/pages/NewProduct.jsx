@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import productService from "../services/product.service";
 import modelService from "../services/model.service";
+import engineService from "../services/engine.service";
 import noPhoto from "../assets/no-photo.png";
 
 export function NewProduct() {
@@ -18,6 +19,7 @@ export function NewProduct() {
         forAllModels: false,
         manufactorId: 0,
         models: [],
+        engines: [],
         categoryId: 0,
         description: '',
         image: noPhoto
@@ -32,9 +34,10 @@ export function NewProduct() {
 
     const [models, setModels] = useState([]);
     const [yearsOfIssue, setYearsOfIssue] = useState([]);
-
     const [modelsSelectValues, setModelsSelectValues] = useState([]);
     const [yearsSelectValues, setYearsSelectValues] = useState([]);
+    const [engines, setEngines] = useState([]);
+    const [engineCapacityStatus, setEngineCapacityStatus] = useState(true);
 
     useEffect(() => {
         productService.getPreliminaryDataForNewProduct().then(result => setData(result.data))
@@ -110,6 +113,10 @@ export function NewProduct() {
         setYearsSelectValues([...e]);
     }
 
+    function onEngineChange(e) {
+        setForm({ ...form, engines: e.map(x => x.value) })
+    }
+
     const uploadProduct = () => {
         setLoading(true);
 
@@ -134,6 +141,20 @@ export function NewProduct() {
         }
 
         reader.readAsDataURL(e.target.files[0]);
+    }
+
+    function onCategoryChange(newValue) {
+        setForm({ ...form, categoryId: newValue.value });
+        if (newValue.label === "Ходовая часть" || newValue.label === "Двигатель") {
+            engineService.getAll().then(result => {
+                if (result.status === 200) {
+                    setEngines(result.data);
+                    setEngineCapacityStatus(false);
+                }
+            })
+        }
+        else
+            setEngineCapacityStatus(true);
     }
 
     return (
@@ -183,7 +204,7 @@ export function NewProduct() {
                         <div className="col-md-12 col-lg-4 mt-2">
                             <Select
                                 options={data.categories.map(x => ({ value: x.id, label: x.name }))}
-                                onChange={(newValue) => setForm({ ...form, categoryId: newValue.value })}
+                                onChange={(newValue) => onCategoryChange(newValue)}
                                 placeholder="Category"
                             />
                         </div>
@@ -192,6 +213,16 @@ export function NewProduct() {
                                 className="form-control"
                                 placeholder="Code"
                                 onChange={(e) => setForm({ ...form, code: e.target.value })}
+                            />
+                        </div>
+                        <div className="col-md-12 col-lg-4 mt-2">
+                            <Select
+                                placeholder="Engine"
+                                options={engines.map(x => ({ value: x.id, label: `${x.capacity.toFixed(1)} ${x.fuelType}` }))}
+                                onChange={(e) => onEngineChange(e)}
+                                isDisabled={engineCapacityStatus}
+                                isMulti
+                                closeMenuOnSelect={false}
                             />
                         </div>
                     </div>
@@ -221,7 +252,7 @@ export function NewProduct() {
                     </div>
                 </div>
             </div>
-            <h2>Совместимость</h2>
+            <h2>Compatibility</h2>
             <div className="row">
                 <div className="col-md-12 col-lg-4">
                     <div className="form-check form-switch">

@@ -39,9 +39,11 @@ export function SuppliesOfGoods() {
             </Link>
             <Table striped bordered hover className="mt-3">
                 <thead>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th></th>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
                     {supplies.map((s, i) => {

@@ -8,5 +8,6 @@ public interface IUnitOfWork
     IProductRepository ProductRepository { get; }
     IAddressRepository AddressRepository { get; }
     ISupplyRepository SupplyRepository { get; }
+    IEngineRepository EngineRepository { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

@@ -17,6 +17,7 @@ public class CreateProductCommand : IRequest
     public string? Description { get; set; }
     public string? Image { get; set; }
     public List<ModelWithYearsOfIssueDto> Models { get; set; } = null!;
+    public List<Guid> Engines { get; set; } = new();
 }
 
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Unit>
@@ -61,6 +62,9 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             }
         }
 
+        var engines = await uow.EngineRepository.GetAllAsync(x => request.Engines.Contains(x.Id));
+
+        product.Engines.AddRange(engines);
         product.EAN = await GenerateEAN();
 
         if (request.Image?.Length > 50)
