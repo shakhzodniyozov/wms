@@ -1,0 +1,14 @@
+﻿@page "/about"
+@inject HttpClient HttpClient
+
+<h1>About us</h1>
+<h2>@data</h2>
+
+@code {
+    string data = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await HttpClient.GetAsync("api/makes");
+        data = await response.Content.ReadAsStringAsync();
+    }
+}
